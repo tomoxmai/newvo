@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.OleDb;
+using System.Data;
 
 namespace ok
 {
@@ -20,9 +22,39 @@ namespace ok
     /// </summary>
     public partial class MainWindow : Window
     {
+        OleDbConnection con;
+        DataTable dt;
         public MainWindow()
         {
             InitializeComponent();
+            con = new OleDbConnection();
+            con.ConnectionString = "Provider=Microsoft.jet.Oledb.4.0; Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\AlummnosDb.mdb";
+            MostrarDatos();
+        }
+
+        private void BtnNuevo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnEditar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnSalir_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
