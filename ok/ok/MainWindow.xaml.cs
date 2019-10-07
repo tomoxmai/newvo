@@ -28,8 +28,32 @@ namespace ok
         {
             InitializeComponent();
             con = new OleDbConnection();
-            con.ConnectionString = "Provider=Microsoft.jet.Oledb.4.0; Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\AlummnosDb.mdb";
+            con.ConnectionString = "Provider=Microsoft.jet.Oledb.4.0; Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\AlummnosDB.mdb";
             MostrarDatos();
+        }
+        //mostramos los registros de la tabla
+        private void MostrarDatos()
+        {
+            OleDbCommand cmd = new OleDbCommand();
+            if (con.State != ConnectionState.Open)
+                con.Open();
+            cmd.Connection = con;
+            cmd.CommandText = "select * from Progra";
+            OleDbDataAdapter da = new OleDbDataAdapter();
+            dt = new DataTable();
+            da.Fill(dt);
+            gvDatos.ItemsSource = dt.AsDataView();
+            if (dt.Rows.Count > 0)
+            {
+                IbContenido.Visibility = System.Windows.Visibility.Hidden;
+                gvDatos.Visibility = System.Windows.Visibility.Visible;
+
+            }
+            else
+            {
+                IbContenido.Visibility = System.Windows.Visibility.Visible;
+                gvDatos.Visibility = System.Windows.Visibility.Hidden;
+            }
         }
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
