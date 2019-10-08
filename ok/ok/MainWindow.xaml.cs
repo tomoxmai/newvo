@@ -39,7 +39,7 @@ namespace ok
                 con.Open();
             cmd.Connection = con;
             cmd.CommandText = "select * from Progra";
-            OleDbDataAdapter da = new OleDbDataAdapter();
+            OleDbDataAdapter da = new OleDbDataAdapter(cmd);
             dt = new DataTable();
             da.Fill(dt);
             gvDatos.ItemsSource = dt.AsDataView();
@@ -101,22 +101,52 @@ namespace ok
 
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
         {
-
+            if(gvDatos.SelectedItems.Count>0)
+            {
+                DataRowView row = (DataRowView)gvDatos.SelectedItems[0];
+                txtId.Text = row["Id"].ToString();
+                txtnombre.Text = row["Nombre"].ToString();
+                cbGenero.Text = row["Genero"].ToString();
+                txtTelefono.Text = row["Telefono"].ToString();
+                txtDireccion.Text = row["Direccion"].ToString();
+                txtId.IsEnabled = false;
+                btnNuevo.Content = "Actualizar";
+            }
+            else
+            {
+                MessageBox.Show("Favor de Seleccionar un alumno");
+            }
         }
 
         private void BtnEliminar_Click(object sender, RoutedEventArgs e)
         {
-
+            if (gvDatos.SelectedItems.Count > 0)
+            {
+                DataRowView row = (DataRowView)gvDatos.SelectedItems[0];
+                OleDbCommand cmd = new OleDbCommand();
+                if (con.State != ConnectionState.Open)
+                    con.Open();
+                cmd.Connection = con;
+                cmd.CommandText = "delete from progra where Id=" + row["Id"].ToString();
+                cmd.ExecuteNonQuery();
+                MostrarDatos();
+                MessageBox.Show("Alumno eliminado correctamente...");
+                LimpiarTodo();
+            }
+            else
+            {
+                MessageBox.Show("Favor de Seleccionar un alumno");
+            }
         }
 
         private void BtnCancelar_Click(object sender, RoutedEventArgs e)
         {
-
+            LimpiarTodo();
         }
 
         private void BtnSalir_Click(object sender, RoutedEventArgs e)
         {
-
+            Application.Current.Shutdown();
         }
     }
 }
