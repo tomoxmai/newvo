@@ -27,7 +27,7 @@
             </WrapPanel>
             <WrapPanel>
                 <TextBlock Text="Nombre: "/>
-                <TextBox Name="txtnombre" />
+                <TextBox Name="txtNombre" />
             </WrapPanel>
             <WrapPanel>
                 <TextBlock Text="Genero: "/>
@@ -52,7 +52,7 @@
                 <Button Name="btnCancelar" Content="Cancelar" FontSize="25" Width="120" Margin="5" Click="BtnCancelar_Click" />
                 <Button Name="btnSalir" Content="Salir" FontSize="25" Width="120" Margin="5" Background="#FF7324FF" Foreground="#FFC9C4FF" Click="BtnSalir_Click" />
             </WrapPanel>
-            <Label Content="No encontre Registros." Name="IbContenido" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FFC9C4FF"></Label>
+            <Label Content="No encontre Registros." Name="IbContenido" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="#FFC9C4FF" Background="#FF493E3E"></Label>
             <WrapPanel Margin="20" HorizontalAlignment="Center">
                 <DataGrid AutoGenerateColumns="True" Name="gvDatos" SelectionMode="Single" FontSize="15" Padding="5" Background="Black" />
             </WrapPanel>

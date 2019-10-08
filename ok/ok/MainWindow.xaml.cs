@@ -28,7 +28,7 @@ namespace ok
         {
             InitializeComponent();
             con = new OleDbConnection();
-            con.ConnectionString = "Provider=Microsoft.jet.Oledb.4.0; Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\AlummnosDB.mdb";
+            con.ConnectionString = "Provider=Microsoft.jet.Oledb.4.0; Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\AlumnosDB.mdb";
             MostrarDatos();
         }
         //mostramos los registros de la tabla
@@ -58,7 +58,7 @@ namespace ok
         private void  LimpiarTodo()
         {
             txtId.Text = "";
-            txtnombre.Text = "";
+            txtNombre.Text = "";
             cbGenero.SelectedIndex = 0;
             txtTelefono.Text = "";
             txtDireccion.Text = "";
@@ -72,31 +72,40 @@ namespace ok
             if (con.State != ConnectionState.Open)
                 con.Open();
             cmd.Connection = con;
-            if(txtId.Text!="")
+
+            if (txtId.Text != "")
             {
-                if(cbGenero.Text!="Selecciona Genero")
+                if (txtId.IsEnabled == true)
                 {
-                    cmd.CommandText = "insert into Progra(Id,Nombre,Genero,Telefono,Direccion)" + "Values(" + txtId.Text + ",'" + txtnombre.Text + ",'" + cbGenero.Text + ",'" + txtTelefono.Text + ",'" + txtDireccion.Text + ")'";
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Alumno agregado correctamente...");
-                    LimpiarTodo();
+                    if (cbGenero.Text != "Selecciona Genero")
+                    {
+                        cmd.CommandText = "insert into Progra(Id,Nombre,Genero,Telefono,Direccion) " +
+                            "Values(" + txtId.Text + ",'" + txtNombre.Text + "','" + cbGenero.Text + "'," + txtTelefono.Text + ",'" + txtDireccion.Text + "')";
+                        cmd.ExecuteNonQuery();
+                        MostrarDatos();
+                        MessageBox.Show("Alumno agregado correctamente...");
+                        LimpiarTodo();
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Favor de seleccionar el genero....");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Favor de seleccionar el genero...");
+                    cmd.CommandText = "update Progra set Nombre='" + txtNombre.Text + "',Genero='" + cbGenero.Text + "',Telefono=" + txtTelefono.Text
+                        + ",Direccion='" + txtDireccion.Text + "' where Id=" + txtId.Text;
+                    cmd.ExecuteNonQuery();
+                    MostrarDatos();
+                    MessageBox.Show("Datos del alumno Actualizados...");
+                    LimpiarTodo();
                 }
             }
             else
             {
-                cmd.CommandText = "update Progra set Nombre='" + txtnombre.Text + "',Genero='" + cbGenero.Text + "',Telefono" + txtTelefono.Text + ",'Direccion='" + txtDireccion.Text + "'where Id=" + txtId.Text;
-                cmd.ExecuteNonQuery();
-                MostrarDatos();
-                MessageBox.Show("Datos del alumno Actualizados...");
-                LimpiarTodo();
-
-
+                MessageBox.Show("Favor de poner el ID de un Alumno.......");
             }
-
         }
 
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
@@ -105,7 +114,7 @@ namespace ok
             {
                 DataRowView row = (DataRowView)gvDatos.SelectedItems[0];
                 txtId.Text = row["Id"].ToString();
-                txtnombre.Text = row["Nombre"].ToString();
+                txtNombre.Text = row["Nombre"].ToString();
                 cbGenero.Text = row["Genero"].ToString();
                 txtTelefono.Text = row["Telefono"].ToString();
                 txtDireccion.Text = row["Direccion"].ToString();
